@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AK's Custom Liveries</title>
+
+<style>
+/* ===== STARTUP ANIMATION ===== */
+
+body{
+  opacity:0;
+  transition:opacity 0.8s ease;
+}
+
+/* when page loads */
+body.loaded{
+  opacity:1;
+}
+
+/* cards start hidden */
+.card{
+  opacity:0;
+  transform:translateY(30px);
+  transition:0.6s ease;
+}
+
+/* show cards after load */
+body.loaded .card{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* stagger effect */
+.card:nth-child(1){transition-delay:0.05s}
+.card:nth-child(2){transition-delay:0.1s}
+.card:nth-child(3){transition-delay:0.15s}
+.card:nth-child(4){transition-delay:0.2s}
+.card:nth-child(5){transition-delay:0.25s}
+.card:nth-child(6){transition-delay:0.3s}
+.card:nth-child(7){transition-delay:0.35s}
+.card:nth-child(8){transition-delay:0.4s}
+.card:nth-child(9){transition-delay:0.45s}
+.card:nth-child(10){transition-delay:0.5s}
+.card:nth-child(11){transition-delay:0.55s}
+.card:nth-child(12){transition-delay:0.6s}
+.card:nth-child(13){transition-delay:0.65s}
+.card:nth-child(14){transition-delay:0.7s}
+.card:nth-child(15){transition-delay:0.75s}
+.card:nth-child(16){transition-delay:0.8s}
+.card:nth-child(17){transition-delay:0.85s}
+.card:nth-child(18){transition-delay:0.9s}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+  user-select:none;
+  -webkit-user-select:none;
+}
+
+/* BODY */
+body{
+  overflow-x:hidden;
+  color:white;
+  background:linear-gradient(270deg,#2b0000,#5a0000,#8b0000,#2b0000);
+  background-size:800% 800%;
+  animation:gradientMove 12s ease infinite;
+}
+
+/* HIDE SCROLLBAR */
+::-webkit-scrollbar{display:none}
+body{scrollbar-width:none}
+
+/* BG ANIMATION */
+@keyframes gradientMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+}
+
+/* HEADER FIXED */
+header{
+  position:sticky;
+  top:0;
+  z-index:9999;
+  padding:16px;
+  text-align:center;
+  border-bottom:2px solid orange;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(10px);
+
+  /* IMPORTANT FIX */
+  position:sticky;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* MOBILE HEADER SIZE */
+header h1{
+  color:orange;
+  font-size:22px;
+  opacity:0;
+  animation:fadeOnly 1s ease forwards;
+}
+
+@media(max-width:500px){
+  header h1{
+    font-size:16px;
+  }
+}
+
+@keyframes fadeOnly{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+/* SOCIAL BUTTON FIX */
+.social-btn{
+  position:absolute;
+  right:15px;
+  top:50%;
+  transform:translateY(-50%);
+  background:orange;
+  color:black;
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:16px;
+  font-weight:bold;
+  z-index:10000;
+}
+
+/* SOCIAL MENU FIX */
+.social-menu{
+  position:absolute;
+  right:15px;
+  top:60px;
+  background:rgba(0,0,0,0.95);
+  border-radius:10px;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(-10px);
+  transition:.3s;
+  z-index:10000;
+}
+
+.social-menu a{
+  color:white;
+  text-decoration:none;
+  font-size:14px;
+  padding:5px 10px;
+  border-radius:6px;
+}
+
+.social-menu a:hover{
+  background:orange;
+  color:black;
+}
+
+.social-menu.active{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+
+/* GRID */
+.container{
+  padding:30px;
+  margin-top:10px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:25px;
+}
+
+@media(max-width:1200px){.container{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){.container{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.container{grid-template-columns:1fr}}
+
+/* CARD */
+.card{
+  border-radius:16px;
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(12px);
+  padding:10px;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:scale(1.05);
+}
+
+/* TITLE */
+.card h2{
+  position:absolute;
+  z-index:2;
+  top:10px;
+  left:10px;
+  background:rgba(0,0,0,0.7);
+  padding:5px 10px;
+  border-radius:10px;
+  font-size:12px;
+}
+
+/* IMAGE */
+.image-box{
+  position:relative;
+  width:100%;
+  height:200px;
+}
+
+.image-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:10px;
+  opacity:1;
+  transition:opacity .4s ease;
+}
+
+/* ARROWS FIX */
+.arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,0.6);
+  padding:8px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:16px;
+  z-index:3;
+}
+
+.arrow:hover{
+  background:orange;
+  color:black;
+  transform:translateY(-50%) scale(1.2);
+}
+
+.left{left:8px}
+.right{right:8px}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:20px;
+  opacity:0;
+  animation:fadeOnly 1s ease forwards;
+  animation-delay:1s;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<header>
+
+<div class="social-btn" onclick="toggleSocial()">☰</div>
+
+<div class="social-menu" id="socialMenu">
+  <a href="https://youtube.com/@EDITMASTERAK" target="_blank">YouTube</a>
+  <a href="https://instagram.com/editmasterak" target="_blank">Instagram</a>
+  <a href="https://facebook.com/em.ak.417685" target="_blank">Facebook</a>
+  <a href="https://discord.com/users/1255101787422068827" target="_blank">Discord</a>
+</div>
+
+<h1>AK's Custom Liveries</h1>
+</header>
+
+<div class="container">
+
+
+<div class="card"><h2>Koenigsegg Regera</h2><div class="image-box" data-img1="img/ragera1.jpg" data-img2="img/ragera2.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/ragera1.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>Porsche 918 Spyder</h2><div class="image-box" data-img1="img/918spyder1.jpg" data-img2="img/918spyder2.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/918spyder1.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>Acura NSX</h2><div class="image-box" data-img1="img/nsx1.jpg" data-img2="img/nsx2.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/nsx1.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>Aston Martin Vantage</h2><div class="image-box" data-img1="img/am1.jpg" data-img2="img/am2.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/am1.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>Lamborghini Huracan</h2><div class="image-box" data-img1="img/lambo1.jpg" data-img2="img/lambo2.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/lambo1.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>Dodge Viper</h2><div class="image-box" data-img1="img/viper1.jpg" data-img2="img/viper2.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/viper1.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>Nissan GTR R34</h2><div class="image-box" data-img1="img/gtr341.jpg" data-img2="img/gtr342.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/gtr341.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>Mitsubishi Lancer Evolution</h2><div class="image-box" data-img1="img/m1.jpg" data-img2="img/m2.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/m1.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>Toyota Supra Mk5</h2><div class="image-box" data-img1="img/supramk5.jpg" data-img2="img/supramk52.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/supramk5.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>BMW M4 Competition</h2><div class="image-box" data-img1="img/m41.jpg" data-img2="img/m42.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/m41.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>Toyota Supra Mk4</h2><div class="image-box" data-img1="img/mk41.jpg" data-img2="img/mk42.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/mk41.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>BMW M5 F90</h2><div class="image-box" data-img1="img/m51.jpg" data-img2="img/m52.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/m51.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>Porsche Cayman GT4</h2><div class="image-box" data-img1="img/cayman1.jpg" data-img2="img/cayman2.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/cayman1.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>Ford Mustang GT</h2><div class="image-box" data-img1="img/mustang1.jpg" data-img2="img/mustang2.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/mustang1.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>Nissan GTR R35</h2><div class="image-box" data-img1="img/gtr1.png" data-img2="img/gtr2.png"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/gtr1.png"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>Mercedes AMG GT</h2><div class="image-box" data-img1="img/amg1.jpg" data-img2="img/amg2.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/amg1.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>Rolls Royce Cullinan</h2><div class="image-box" data-img1="img/rr1.jpg" data-img2="img/rr2.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/rr1.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+<div class="card"><h2>Mercedes G Wagon</h2><div class="image-box" data-img1="img/g1.jpg" data-img2="img/g2.jpg"><span class="arrow left" onclick="switchImg(this)">‹</span><img src="img/g1.jpg"><span class="arrow right" onclick="switchImg(this)">›</span></div></div>
+
+
+</div>
+
+<footer>© EDIT MASTER AK | All Rights Reserved</footer>
+
+<script>
+
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+});
+
+function toggleSocial(){
+  document.getElementById("socialMenu").classList.toggle("active");
+}
+
+function switchImg(btn){
+  let box = btn.parentElement;
+  let img = box.querySelector("img");
+  let img1 = box.dataset.img1;
+  let img2 = box.dataset.img2;
+
+  img.style.opacity = 0;
+
+  setTimeout(()=>{
+    img.src = img.src.includes(img1) ? img2 : img1;
+    img.onload = ()=> img.style.opacity = 1;
+  },150);
+}
+
+/* particles unchanged */
+</script>
+
+</body>
+</html>
